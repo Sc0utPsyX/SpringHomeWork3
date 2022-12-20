@@ -2,9 +2,8 @@ package ru.gb.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.gb.ProductRepository;
+import ru.gb.dao.ProductDao;
 import ru.gb.model.Product;
 
 import java.util.List;
@@ -14,20 +13,19 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    private ProductRepository productRepository;
-
+    private ProductDao productDao;
 
     @GetMapping("/all")
     @ResponseBody
     public List<Product> getAllProducts() {
-        return productRepository.getProductList();
+        return productDao.findAll();
     }
 
     @DeleteMapping("/delete")
     @ResponseBody
     public List<Product> deleteProduct(@RequestParam Long productId){
-        productRepository.deleteById(productId);
-        return productRepository.getProductList();
+        productDao.deleteById(productId);
+        return productDao.findAll();
     }
 
 //    @GetMapping("/addproduct")
@@ -47,8 +45,8 @@ public class ProductController {
     @PostMapping("/add")
     @ResponseBody
     public List<Product> productSubmit(@RequestParam String productTitle, @RequestParam Double productCost) {
-        productRepository.addProduct(new Product(productTitle, productCost));
-        return productRepository.getProductList();
+        productDao.saveOrUpdate(new Product(productTitle, productCost));
+        return productDao.findAll();
     }
 
 }

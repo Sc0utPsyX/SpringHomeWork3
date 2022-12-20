@@ -1,9 +1,19 @@
 package ru.gb.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "products")
 public class Product {
-    private static Long count = 0L;
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private Long id;
+    @Column(name = "title")
     private String title;
+    @Column(name = "cost")
+    private Double cost;
 
     @Override
     public String toString() {
@@ -22,19 +32,31 @@ public class Product {
         return cost;
     }
 
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
     public Long getId() {
         return id;
     }
 
-    private Double cost;
+
 
     public Product() {
-        this.id = count++;
+
     }
 
 
     public Product(String title, Double cost) {
-        this.id = count++;
         this.title = title;
         this.cost = cost;
     }
