@@ -18,7 +18,7 @@ public class ProductRepository {
         return productList;
     }
 
-    private List<Product> productList = new ArrayList<>(List.of(
+    private ArrayList<Product> productList = new ArrayList<>(List.of(
             new Product("Bread", 100d),
             new Product("Milk", 400d),
             new Product("Banana", 1000d))
@@ -38,6 +38,14 @@ public class ProductRepository {
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElseThrow(RuntimeException::new);
+    }
+
+    public void deleteById(Long id){
+        try {
+            productList.remove(getById(id));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Not Found");
+        }
     }
 
 }
